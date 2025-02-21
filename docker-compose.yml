@@ -1,13 +1,14 @@
 services:
   mdt-apc:
-    image: apc-worker
+#    image:
+    build: .
     environment:
       APC_URL:
       ACCOUNT:
       APC_KEY:
       TC_URL:
       KEY-AGENCY:
-      TZ: "America/New_York"
+      TZ:
     volumes:
       - /your/path/to/vehicleCapacities.json:/app/resources/vehicleCapacities.json
 #    ports:
