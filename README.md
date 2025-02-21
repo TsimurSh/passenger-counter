@@ -9,6 +9,11 @@
 ##### tc-url: https://tc.eu/api/v1/key/ 
 ##### key-agency: "key/agency/agency_id"
 ----------------------------------------------------------
+## Build 
+```shell
+./gradlew assemble
+```
+
 ## Run
 Requirement:
 - `docker` - installed.
