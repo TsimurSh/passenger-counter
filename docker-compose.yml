@@ -1,5 +1,5 @@
 services:
-  mdt-apc:
+  worker:
 #    image:
     build: .
     environment:
