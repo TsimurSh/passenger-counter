@@ -1,0 +1,12 @@
+server:
+  port: 8080
+api:
+## Source base URLs & auth
+  video-url: ""
+  video-account: ""
+  video-key: ""
+  tc-url: ""
+  key-agency: ""
+
+
+

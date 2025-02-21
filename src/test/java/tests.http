@@ -1,0 +1,9 @@
+### GET ALL STATS
+GET http://localhost:8800/kombus/poznan.text
+Accept: application/json
+
+### GET ALL STATS
+GET http://localhost:8081/v1/busloads
+Accept: application/json
+
+#e9f01d3a59e5427496d38ad810eeacc3

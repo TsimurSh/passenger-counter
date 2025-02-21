@@ -1,0 +1,14 @@
+services:
+  mdt-apc:
+    image: apc-worker
+    environment:
+      APC_URL:
+      ACCOUNT:
+      APC_KEY:
+      TC_URL:
+      KEY-AGENCY:
+      TZ: "America/New_York"
+    volumes:
+      - /your/path/to/vehicleCapacities.json:/app/resources/vehicleCapacities.json
+#    ports:
+#      - "8080:8081"
