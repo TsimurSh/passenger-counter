@@ -1,9 +1,9 @@
 server:
   port: 8081
 api:
-## Source base URLs & auth
-  video-url: ${APC_URL}
-  video-account: ${ACCOUNT}
-  video-key: ${APC_KEY}
-  tc-url: ${TC_URL}
-  key-agency: ${KEY-AGENCY}
+  security:
+    user: "user"
+    password: "password"
+# If would like to use source of data from file
+#  path-to-json-counts-file: "./out.json"
+#  interval-to-upload-json-file: "30"

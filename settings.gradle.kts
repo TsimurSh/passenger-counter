@@ -1,1 +1,1 @@
-rootProject.name = "passenger-counter-client"
+rootProject.name = "passenger-counter"

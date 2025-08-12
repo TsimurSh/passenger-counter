@@ -13,31 +13,33 @@ import java.util.Map;
 
 @Log4j2
 public class CapacitiesConfig {
-    private final Map<Integer, List<String>> vehicleConfigs;
+// TODO will uncomment soon
+
+//    private final Map<Integer, List<String>> vehicleConfigs;
 
     public CapacitiesConfig() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            this.vehicleConfigs = objectMapper.readValue(Paths.get("/app/resources/vehicleCapacities.json").toFile(),
-                            VehicleConfigLoader.class)
-                    .getVehicles();
-            log.debug("Loaded from file {} vehicles", vehicleConfigs.size());
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to load vehicle config file", e);
-        }
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        try {
+//            this.vehicleConfigs = objectMapper.readValue(Paths.get("/app/resources/vehicleCapacities.json").toFile(),
+//                            VehicleConfigLoader.class)
+//                    .getVehicles();
+//            log.debug("Loaded from file {} vehicles", vehicleConfigs.size());
+//        } catch (IOException e) {
+//            throw new RuntimeException("Failed to load vehicle config file", e);
+//        }
     }
 
-    public HashMap<String, Integer> getVehiclesAndDivisors() {
-        HashMap<String, Integer> vehicleMap = new HashMap<>();
-        vehicleConfigs.forEach((divisor, value) -> value
-                .forEach(vehicle -> vehicleMap.put(vehicle, divisor)));
-        log.info("Mapped {} vehicles with config capacity", vehicleMap.size());
-        return vehicleMap;
-    }
+//    public HashMap<String, Integer> getVehiclesAndDivisors() {
+//        HashMap<String, Integer> vehicleMap = new HashMap<>();
+//        vehicleConfigs.forEach((divisor, value) -> value
+//                .forEach(vehicle -> vehicleMap.put(vehicle, divisor)));
+//        log.info("Mapped {} vehicles with config capacity", vehicleMap.size());
+//        return vehicleMap;
+//    }
 
-    @Getter
-    @Setter
-    private static class VehicleConfigLoader {
-        private Map<Integer, List<String>> vehicles;
-    }
+//    @Getter
+//    @Setter
+//    private static class VehicleConfigLoader {
+//        private Map<Integer, List<String>> vehicles;
+//    }
 }
