@@ -1,19 +1,14 @@
 package pl.goeuropa.counter.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import static pl.goeuropa.counter.repository.PeopleCountRepository.CAPACITY_CONFIGS;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class BusLoadDto implements Serializable {
 
     private String vehicleName;
@@ -21,24 +16,18 @@ public class BusLoadDto implements Serializable {
     private float currentFullness;
     private long timestamp;
 
-    public BusLoadDto(IncomeInfoDto dto) {
-        this.vehicleName = dto.getVehiIdno().replaceAll("(-APC2|-APC)$", "");
-        this.currentCount = dto.getIncrPeople();
-        this.currentFullness = getFullness();
-        this.timestamp = getDateTime(dto.getTimeStr()).getTime();
+    public BusLoadDto(LogEntryDto logEntry) {
+        this.vehicleName = "Unknown";
+        this.currentCount = getLoadAsInt(logEntry.getMessage());
+        this.currentFullness = Float.NaN;
+        this.timestamp = logEntry.getTimestamp() / 1000;
     }
 
-    private Date getDateTime(String timeStr) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            return formatter.parse(timeStr);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("Invalid date format: " + timeStr, e);
-        }
-    }
+    private int getLoadAsInt(String message) {
+        Pattern pattern = Pattern.compile("roomname\\s+(\\d+)\\.");
+        Matcher matcher = pattern.matcher(message);
 
-    private float getFullness() {
-        int divisor = CAPACITY_CONFIGS.get(this.vehicleName);
-        return  ((float) this.currentCount / divisor) * 100;
+        if (matcher.find()) return Integer.parseInt(matcher.group(1));
+        return -1;
     }
 }
