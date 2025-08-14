@@ -7,3 +7,5 @@ api:
 # If would like to use source of data from file
 #  path-to-json-counts-file: "./out.json"
 #  interval-to-upload-json-file: "30"
+  #For dev only
+  vehicle-name: "BO1234"

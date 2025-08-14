@@ -1,7 +1,6 @@
 package pl.goeuropa.counter.repository;
 
 import lombok.Data;
-import pl.goeuropa.counter.configs.CapacitiesConfig;
 import pl.goeuropa.counter.dto.BusLoadDto;
 
 import java.util.Map;
@@ -9,10 +8,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Data
 public class PeopleCountRepository {
-
-// TODO will uncomment soon
-//    public static final Map<String, Integer> CAPACITY_CONFIGS = new CapacitiesConfig()
-//            .getVehiclesAndDivisors();
 
     private static final PeopleCountRepository singleton = new PeopleCountRepository();
 
