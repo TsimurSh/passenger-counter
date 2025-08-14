@@ -17,7 +17,7 @@ public class BusLoadDto implements Serializable {
     private long timestamp;
 
     public BusLoadDto(LogEntryDto logEntry) {
-        this.vehicleName = "Unknown";
+        this.vehicleName = "";
         this.currentCount = getLoadAsInt(logEntry.getMessage());
         this.currentFullness = Float.NaN;
         this.timestamp = logEntry.getTimestamp() / 1000;

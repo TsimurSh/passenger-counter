@@ -23,7 +23,7 @@ public class AsyncConfig implements AsyncConfigurer {
         return new AsyncUncaughtExceptionHandler() {
             @Override
             public void handleUncaughtException(Throwable ex, Method method, Object... params) {
-                System.err.println("Async error in method: " + method.getName());
+                System.err.println(" --------- Async error in method: " + method.getName());
                 ex.printStackTrace();
             }
         };
