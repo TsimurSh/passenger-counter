@@ -17,17 +17,18 @@ public class BusLoadDto implements Serializable {
     private long timestamp;
 
     public BusLoadDto(LogEntryDto logEntry) {
-        this.vehicleName = "";
-        this.currentCount = getLoadAsInt(logEntry.getMessage());
+        this.vehicleName = parseMessage(logEntry.getMessage(),1);
+        this.currentCount = Integer.parseInt(parseMessage(logEntry.getMessage(),2));
         this.currentFullness = Float.NaN;
         this.timestamp = logEntry.getTimestamp() / 1000;
     }
 
-    private int getLoadAsInt(String message) {
-        Pattern pattern = Pattern.compile("roomname\\s+(\\d+)\\.");
+    private String parseMessage(String message, int group) {
+        Pattern pattern = Pattern.compile("^\\s*(\\w+)\\s+([0-9]+(?:\\.[0-9]+)?)");
         Matcher matcher = pattern.matcher(message);
 
-        if (matcher.find()) return Integer.parseInt(matcher.group(1));
-        return -1;
+        if (matcher.find() && group == 2) return matcher.group(group);
+        if (matcher.find() && group == 2) return matcher.group(group);
+        return "";
     }
 }

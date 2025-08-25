@@ -22,8 +22,8 @@ public class CounterService {
 
     private final PeopleCountRepository peopleCountRepository = PeopleCountRepository.getInstance();
 
-    @Value("${api.vehicle-name}")
-    private String vehicleName;
+//    @Value("${api.vehicle-name}")
+//    private String vehicleName;
 
     @Async
     public void asyncParseJsonFile(List<String> reader) {
@@ -47,10 +47,9 @@ public class CounterService {
         }
         if (newestCount != null) {
             BusLoadDto busLoadDto = new BusLoadDto(newestCount);
-            busLoadDto.setVehicleName(vehicleName);
             log.info("Parsed new object {}", busLoadDto);
             peopleCountRepository.getUpdatesAboutLoads()
-                    .put(vehicleName, busLoadDto);
+                    .put(busLoadDto.getVehicleName(), busLoadDto);
             log.debug("{} dto objects is persisted.", peopleCountRepository.getUpdatesAboutLoads().size());
         }
     }
