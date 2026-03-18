@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static pl.goeuropa.counter.repository.PeopleCountRepository.CAPACITY_CONFIGS;
+
 @Data
 @NoArgsConstructor
 public class BusLoadDto implements Serializable {
@@ -18,7 +20,7 @@ public class BusLoadDto implements Serializable {
 
     public BusLoadDto(LogEntryDto logEntry) {
         parseMessage(logEntry.getMessage());
-        this.currentFullness = Float.NaN;
+        this.currentFullness = getFullness();
         this.timestamp = logEntry.getTimestamp() / 1000;
     }
 
@@ -33,5 +35,11 @@ public class BusLoadDto implements Serializable {
             this.vehicleName = "Unknown";
             this.currentCount = -1;
         }
+    }
+
+    private float getFullness() {
+        int divisor = CAPACITY_CONFIGS.getOrDefault(this.vehicleName, -1);
+        if (divisor != -1) return ((float) this.currentCount / divisor) * 100;
+        else return Float.NaN;
     }
 }
