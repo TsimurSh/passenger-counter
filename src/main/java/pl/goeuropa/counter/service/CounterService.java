@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import pl.goeuropa.counter.dto.BusLoadDto;
+import pl.goeuropa.counter.dto.DeviceSnapshotDto;
 import pl.goeuropa.counter.dto.LogEntryDto;
 import pl.goeuropa.counter.repository.PeopleCountRepository;
 
@@ -70,6 +71,18 @@ public class CounterService {
         busLoadsWithTimeCheck.put("time", timeCheck);
         removeOldObjects(peopleCountRepository.getUpdatesAboutLoads());
         return peopleCountRepository.getUpdatesAboutLoads();
+    }
+
+    public void saveDeviceSnapshot(DeviceSnapshotDto snapshot) {
+        peopleCountRepository.getDeviceSnapshots()
+                .put(snapshot.getDeviceId(), snapshot);
+        log.debug("Device snapshot saved for [{}], total snapshots: {}",
+                snapshot.getDeviceId(),
+                peopleCountRepository.getDeviceSnapshots().size());
+    }
+
+    public Map<String, DeviceSnapshotDto> getDeviceSnapshots() {
+        return peopleCountRepository.getDeviceSnapshots();
     }
 
     private void removeOldObjects(Map<String, BusLoadDto> objectMap) {
