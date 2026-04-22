@@ -8,4 +8,4 @@ api:
 #  path-to-json-counts-file: "./out.json"
 #  interval-to-upload-json-file: "30"
   #For dev only
-  name-mapping:
+#  name-mapping: "50:51"
