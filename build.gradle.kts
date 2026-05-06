@@ -24,6 +24,12 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
 }

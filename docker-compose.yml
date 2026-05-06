@@ -1,15 +1,11 @@
 services:
-  worker:
-#    image:
-    build: .
+  pax:
+    build:
+      context: .
     environment:
-      APC_URL:
-      ACCOUNT:
-      APC_KEY:
-      TC_URL:
-      KEY-AGENCY:
-      TZ:
+      TZ: "Europe/Warsaw"
+    image: sniffer-server
+    ports:
+      - "8008:8080"
     volumes:
-      - /your/path/to/vehicleCapacities.json:/app/resources/vehicleCapacities.json
-#    ports:
-#      - "8080:8081"
+      - /opt/app/vehicleCapacities.json:/app/resources/vehicleCapacities.json #to map json file with capacities
