@@ -22,14 +22,17 @@ public class CounterService {
 
     private final PeopleCountRepository peopleCountRepository = PeopleCountRepository.getInstance();
 
-//    @Value("${api.vehicle-name}")
-//    private String vehicleName;
+    @Value("${api.name-mapping}")
+    private String nameMapping;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Async
     public void asyncParseJsonFile(List<String> reader) {
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        log.debug("Started parsing json file by thread: [{}]", Thread.currentThread().getName());
+        Thread.currentThread().setName("async-parser");
+        log.debug("Started parsing json file by thread: [{}-{}]",
+                Thread.currentThread().getName(),
+                Thread.currentThread().getId());
 
         LogEntryDto newestCount = null;
         try {
@@ -47,6 +50,11 @@ public class CounterService {
         }
         if (newestCount != null) {
             BusLoadDto busLoadDto = new BusLoadDto(newestCount);
+            if (nameMapping != null && !nameMapping.isBlank()){
+                String[] vehicleNames = nameMapping.split(":");
+                if (busLoadDto.getVehicleName().equals(vehicleNames[0]))
+                    busLoadDto.setVehicleName(vehicleNames[1]);
+            }
             log.info("Parsed new object {}", busLoadDto);
             peopleCountRepository.getUpdatesAboutLoads()
                     .put(busLoadDto.getVehicleName(), busLoadDto);

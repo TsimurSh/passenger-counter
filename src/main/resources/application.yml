@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 api:
   security:
     user: "user"
@@ -8,4 +8,4 @@ api:
 #  path-to-json-counts-file: "./out.json"
 #  interval-to-upload-json-file: "30"
   #For dev only
-  vehicle-name: "BO1234"
+#  name-mapping: "5:6"
