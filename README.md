@@ -42,7 +42,7 @@ Spring Boot 3.x REST API that collects passenger counts from Pi-based sniffers (
 
 **Optional file-based mode:** When `api.path-to-json-counts-file` is set, `CountsFromFileScheduler` polls that file every N seconds (default 15) and feeds data via `ScheduleTasksService`. Both the scheduler and its service are `@ConditionalOnProperty` gated on that property.
 
-**Capacity config:** `vehicleCapacities.json` maps vehicle names to capacity divisors. In Docker it must be mounted at `/app/resources/vehicleCapacities.json`. `CapacitiesConfig` reads it directly from the filesystem at startup (not from classpath), so the file must exist at that path before the app starts.
+**Capacity config:** `vehicleCapacities.json` maps vehicle names to capacity divisors. In Docker it must be mounted at `/app/resources/vehicleCapacities.json`. `CapacitiesConfig` reads it directly from the classpath resources, so the file must exist before the app starts.
 
 **Security:** `POST /v1/upload-json` requires HTTP Basic Auth (`api.security.user` / `api.security.password`). `GET /v1/busloads` is public.
 
