@@ -28,7 +28,7 @@ public class BusLoadDto implements Serializable {
         this.vehicleName = snapshot.getDeviceId();
         this.currentCount = snapshot.getSummary().getPhones();
         this.currentFullness = getFullness();
-        this.timestamp = snapshot.getTimestamp();
+        this.timestamp = System.currentTimeMillis();
     }
 
     private void parseMessage(String message) {
