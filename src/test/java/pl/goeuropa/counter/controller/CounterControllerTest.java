@@ -8,13 +8,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import pl.goeuropa.counter.dto.DeviceSnapshotDto;
+import pl.goeuropa.counter.dto.ArduinoDeviceSnapshotDto;
 import pl.goeuropa.counter.dto.DeviceSummaryDto;
 import pl.goeuropa.counter.dto.ScannedDeviceDto;
 import pl.goeuropa.counter.service.CounterService;
 
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.security.test.context.support.WithMockUser;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -35,6 +37,7 @@ class CounterControllerTest {
     CounterService counterService;
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void getDevices_returnsEmptyMap() throws Exception {
         when(counterService.getDeviceSnapshots()).thenReturn(Map.of());
 
@@ -45,8 +48,9 @@ class CounterControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void getDevices_returnsSnapshotMap() throws Exception {
-        DeviceSnapshotDto snapshot = buildSnapshot("ESP32_AABBCC");
+        ArduinoDeviceSnapshotDto snapshot = buildSnapshot("ESP32_AABBCC");
         when(counterService.getDeviceSnapshots()).thenReturn(Map.of("ESP32_AABBCC", snapshot));
 
         mockMvc.perform(get("/v2/devices"))
@@ -58,7 +62,7 @@ class CounterControllerTest {
 
     @Test
     void postDevice_savesSnapshotAndReturnsConfirmation() throws Exception {
-        DeviceSnapshotDto snapshot = buildSnapshot("ESP32_AABBCC");
+        ArduinoDeviceSnapshotDto snapshot = buildSnapshot("ESP32_AABBCC");
 
         mockMvc.perform(post("/v2/devices")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -66,7 +70,7 @@ class CounterControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("Snapshot from ESP32_AABBCC saved."));
 
-        verify(counterService, times(1)).saveDeviceSnapshot(any(DeviceSnapshotDto.class));
+        verify(counterService, times(1)).saveDeviceSnapshot(any(ArduinoDeviceSnapshotDto.class));
     }
 
     @Test
@@ -88,7 +92,7 @@ class CounterControllerTest {
                 .andExpect(content().string("Snapshot from ESP32_TEST saved."));
     }
 
-    private DeviceSnapshotDto buildSnapshot(String deviceId) {
+    private ArduinoDeviceSnapshotDto buildSnapshot(String deviceId) {
         ScannedDeviceDto device = new ScannedDeviceDto();
         device.setMac("AA:BB:CC:DD:EE:FF");
         device.setRssi(-65);
@@ -108,7 +112,7 @@ class CounterControllerTest {
         summary.setBeacons(3);
         summary.setOther(1);
 
-        DeviceSnapshotDto snapshot = new DeviceSnapshotDto();
+        ArduinoDeviceSnapshotDto snapshot = new ArduinoDeviceSnapshotDto();
         snapshot.setDeviceId(deviceId);
         snapshot.setTimestamp(1704246600L);
         snapshot.setDevices(List.of(device));

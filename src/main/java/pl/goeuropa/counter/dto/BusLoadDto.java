@@ -24,6 +24,13 @@ public class BusLoadDto implements Serializable {
         this.timestamp = logEntry.getTimestamp() / 1000;
     }
 
+    public BusLoadDto(ArduinoDeviceSnapshotDto snapshot) {
+        this.vehicleName = snapshot.getDeviceId();
+        this.currentCount = snapshot.getSummary().getPhones();
+        this.currentFullness = getFullness();
+        this.timestamp = snapshot.getTimestamp();
+    }
+
     private void parseMessage(String message) {
         Pattern pattern = Pattern.compile("^\\s*(\\S+)\\s+([0-9]+(?:\\.[0-9]+)?)");
         Matcher matcher = pattern.matcher(message);

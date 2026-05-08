@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import pl.goeuropa.counter.dto.BusLoadDto;
-import pl.goeuropa.counter.dto.DeviceSnapshotDto;
+import pl.goeuropa.counter.dto.ArduinoDeviceSnapshotDto;
 import pl.goeuropa.counter.dto.LogEntryDto;
 import pl.goeuropa.counter.repository.PeopleCountRepository;
 
@@ -23,7 +23,7 @@ public class CounterService {
 
     private final PeopleCountRepository peopleCountRepository = PeopleCountRepository.getInstance();
 
-    @Value("${api.name-mapping}")
+    @Value("${api.name-mapping:}")
     private String nameMapping;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -73,15 +73,15 @@ public class CounterService {
         return peopleCountRepository.getUpdatesAboutLoads();
     }
 
-    public void saveDeviceSnapshot(DeviceSnapshotDto snapshot) {
-        peopleCountRepository.getDeviceSnapshots()
-                .put(snapshot.getDeviceId(), snapshot);
+    public void saveDeviceSnapshot(ArduinoDeviceSnapshotDto snapshot) {
+        peopleCountRepository.getDeviceSnapshots().put(snapshot.getDeviceId(), snapshot);
+        peopleCountRepository.getUpdatesAboutLoads().put(snapshot.getDeviceId(), new BusLoadDto(snapshot));
         log.debug("Device snapshot saved for [{}], total snapshots: {}",
                 snapshot.getDeviceId(),
                 peopleCountRepository.getDeviceSnapshots().size());
     }
 
-    public Map<String, DeviceSnapshotDto> getDeviceSnapshots() {
+    public Map<String, ArduinoDeviceSnapshotDto> getDeviceSnapshots() {
         return peopleCountRepository.getDeviceSnapshots();
     }
 

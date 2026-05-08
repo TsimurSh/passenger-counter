@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DeviceSnapshotDto {
+public class ArduinoDeviceSnapshotDto {
 
     @JsonProperty("device_id")
     private String deviceId;
