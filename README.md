@@ -87,9 +87,9 @@ When `api.path-to-json-counts-file` is set, `CountsFromFileScheduler` polls that
 
 ## Key files
 
-| File | Purpose |
-|------|---------|
-| `src/main/resources/application.yml` | All config; `api.name-mapping` (`oldName:newName`) is dev-only vehicle ID remapping |
-| `src/main/resources/vehicleCapacities.json` | Vehicle name → capacity divisor mapping (read from classpath at startup) |
-| `docker-compose.yml` | Volume-mounts the JSON config and sets env vars |
-| `src/test/resources/application-test.yml` | Test profile — stubs out upstream URLs |
+| File | Purpose                                                                                               |
+|------|-------------------------------------------------------------------------------------------------------|
+| `src/main/resources/application.yml` | All config; `api.name-mapping` (`oldName:newName`) is dev-only vehicle ID remapping                   |
+| `src/main/resources/vehicleCapacities.json` | Vehicle name → capacity divisor mapping (read from app/resources for ability to mapping in container) |
+| `docker-compose.yml` | Volume-mounts the JSON config and sets env vars                                                       |
+| `src/test/resources/application-test.yml` | Test profile — stubs out upstream URLs                                                                |
