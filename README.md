@@ -2,14 +2,15 @@
 - Setup environment var. in docker-compose.yml
 - Create vehicleCapacities.json and set it as `volumes` in docker-compose.yml config
 ----------------------------------------------------------
-#### Examples:
+### Examples:
 ###### security:
 ###### user: "user"
 ###### password: "password"
-##### If would like to use source of data from file not from REST api
-######   path-to-json-counts-file: "./outer.json"
-######   interval-to-upload-json-file: "30"
-
+####### If would like to use source of data from file not from REST api
+######  path-to-json-counts-file: "./outer.json"
+######  interval-to-upload-json-file: "30"
+#######For dev only
+###### name-mapping: "5:8"
 ----------------------------------------------------------
 ## Build Docker
 ```shell
